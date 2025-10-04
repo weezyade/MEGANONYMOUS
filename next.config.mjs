@@ -1,13 +1,28 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  eslint: { ignoreDuringBuilds: true },
-  typescript: { ignoreBuildErrors: true },
-  images: { unoptimized: true },
-  experimental: {
-    appDir: true,
+  // ✅ Ignore build-time linting/type errors on Vercel
+  eslint: {
+    ignoreDuringBuilds: true,
   },
-  output: "standalone", // ensures server functions are deployed properly
-};
+  typescript: {
+    ignoreBuildErrors: true,
+  },
 
-export default nextConfig;
+  // ✅ Disable image optimization (Vercel handles this or Supabase public URLs)
+  images: {
+    unoptimized: true,
+  },
+
+  // ✅ (Optional) If using environment variables at runtime
+  experimental: {
+    serverActions: {
+      allowedOrigins: ['*'], // or your Vercel domain if you want to be stricter
+    },
+  },
+
+  // ✅ For edge compatibility (optional, helps with Supabase SSR)
+  reactStrictMode: true,
+}
+
+export default nextConfig
 
